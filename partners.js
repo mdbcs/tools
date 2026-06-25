@@ -5,7 +5,7 @@
 const Partners = {
 
   async fetchAll() {
-    const { data, error } = await supabase
+    const { data, error } = await sb
       .from('partners')
       .select(`
         *,
@@ -57,7 +57,7 @@ const Partners = {
       kode = generateKode('MTR', existingCodes);
     }
 
-    const { data: partner, error } = await supabase
+    const { data: partner, error } = await sb
       .from('partners')
       .insert({
         kode,
@@ -78,7 +78,7 @@ const Partners = {
     // Relasi ke brand yang dipilih
     if (brandIds && brandIds.length > 0) {
       const rows = brandIds.map(brandId => ({ partner_id: partner.id, brand_id: brandId }));
-      const { error: pbError } = await supabase.from('partner_brands').insert(rows);
+      const { error: pbError } = await sb.from('partner_brands').insert(rows);
       if (pbError) {
         console.error('Gagal hubungkan mitra ke brand:', pbError);
         showToast('Mitra tersimpan, tapi gagal menghubungkan ke beberapa brand.', 'error');
@@ -90,7 +90,7 @@ const Partners = {
   },
 
   async update(partnerId, partnerData) {
-    const { error } = await supabase
+    const { error } = await sb
       .from('partners')
       .update({
         nama: partnerData.nama,
@@ -115,13 +115,13 @@ const Partners = {
     const existing = partner?.partner_brands?.find(pb => pb.brand_id === brandId);
 
     if (existing) {
-      const { error } = await supabase
+      const { error } = await sb
         .from('partner_brands')
         .update({ diskon_tipe: diskonTipe, diskon_nilai: diskonNilai })
         .eq('id', existing.id);
       if (error) throw new Error('Gagal update diskon.');
     } else {
-      const { error } = await supabase
+      const { error } = await sb
         .from('partner_brands')
         .insert({ partner_id: partnerId, brand_id: brandId, diskon_tipe: diskonTipe, diskon_nilai: diskonNilai });
       if (error) throw new Error('Gagal menyimpan diskon.');
@@ -135,13 +135,13 @@ const Partners = {
     const existing = partner?.partner_brands?.find(pb => pb.brand_id === brandId);
 
     if (existing) {
-      const { error } = await supabase
+      const { error } = await sb
         .from('partner_brands')
         .update({ aktif: isActive })
         .eq('id', existing.id);
       if (error) throw new Error('Gagal mengubah status brand mitra.');
     } else if (isActive) {
-      const { error } = await supabase
+      const { error } = await sb
         .from('partner_brands')
         .insert({ partner_id: partnerId, brand_id: brandId, aktif: true });
       if (error) throw new Error('Gagal menghubungkan mitra ke brand.');
@@ -151,7 +151,7 @@ const Partners = {
   },
 
   async deactivate(partnerId) {
-    const { error } = await supabase
+    const { error } = await sb
       .from('partners')
       .update({ aktif: false })
       .eq('id', partnerId);
