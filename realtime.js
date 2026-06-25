@@ -17,7 +17,7 @@ const Realtime = {
   // Hapus channel lama sebelum buat baru — mencegah subscription dobel
   _cleanup(channelName) {
     if (this.channels[channelName]) {
-      supabase.removeChannel(this.channels[channelName]);
+      sb.removeChannel(this.channels[channelName]);
       delete this.channels[channelName];
     }
   },
@@ -40,7 +40,7 @@ const Realtime = {
     const name = 'realtime-partners';
     this._cleanup(name);
 
-    this.channels[name] = supabase
+    this.channels[name] = sb
       .channel(name)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'partners' },
         async () => {
@@ -59,7 +59,7 @@ const Realtime = {
     const name = 'realtime-products';
     this._cleanup(name);
 
-    this.channels[name] = supabase
+    this.channels[name] = sb
       .channel(name)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'products' },
         async () => {
@@ -73,7 +73,7 @@ const Realtime = {
     const name = 'realtime-aliases';
     this._cleanup(name);
 
-    this.channels[name] = supabase
+    this.channels[name] = sb
       .channel(name)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'product_aliases' },
         async () => {
@@ -87,7 +87,7 @@ const Realtime = {
     const name = 'realtime-orders';
     this._cleanup(name);
 
-    this.channels[name] = supabase
+    this.channels[name] = sb
       .channel(name)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'orders' },
         async () => {
@@ -105,7 +105,7 @@ const Realtime = {
     const name = 'realtime-order-items';
     this._cleanup(name);
 
-    this.channels[name] = supabase
+    this.channels[name] = sb
       .channel(name)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'order_items' },
         async () => {
