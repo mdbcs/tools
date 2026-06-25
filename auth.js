@@ -34,7 +34,7 @@ const Auth = {
 
   // Ambil daftar user aktif untuk ditampilkan di layar pilih nama
   async fetchActiveUsers() {
-    const { data, error } = await supabase
+    const { data, error } = await sb
       .from('app_users')
       .select('id, nama, role')
       .eq('aktif', true)
@@ -50,7 +50,7 @@ const Auth = {
 
   // Cek apakah sistem sudah punya user sama sekali (untuk setup awal)
   async hasAnyUser() {
-    const { count, error } = await supabase
+    const { count, error } = await sb
       .from('app_users')
       .select('id', { count: 'exact', head: true });
 
@@ -64,7 +64,7 @@ const Auth = {
   // Buat user Owner pertama kali (mode setup awal)
   async createFirstOwner(nama, pin) {
     const pinHash = await hashPin(pin);
-    const { data, error } = await supabase
+    const { data, error } = await sb
       .from('app_users')
       .insert({ nama, pin_hash: pinHash, role: 'owner', aktif: true })
       .select()
@@ -81,7 +81,7 @@ const Auth = {
   async login(userId, pin) {
     const pinHash = await hashPin(pin);
 
-    const { data, error } = await supabase
+    const { data, error } = await sb
       .from('app_users')
       .select('id, nama, role, pin_hash')
       .eq('id', userId)
@@ -104,7 +104,7 @@ const Auth = {
   // Tambah user CS baru (hanya bisa dilakukan Owner, divalidasi juga di UI)
   async createUser(nama, pin, role) {
     const pinHash = await hashPin(pin);
-    const { data, error } = await supabase
+    const { data, error } = await sb
       .from('app_users')
       .insert({ nama, pin_hash: pinHash, role, aktif: true })
       .select()
@@ -119,7 +119,7 @@ const Auth = {
 
   // Nonaktifkan user (bukan hapus, supaya histori order tetap utuh)
   async deactivateUser(userId) {
-    const { error } = await supabase
+    const { error } = await sb
       .from('app_users')
       .update({ aktif: false })
       .eq('id', userId);
