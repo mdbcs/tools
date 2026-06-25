@@ -5,7 +5,7 @@
 const Brands = {
 
   async fetchAll() {
-    const { data, error } = await supabase
+    const { data, error } = await sb
       .from('brands')
       .select('*')
       .eq('aktif', true)
