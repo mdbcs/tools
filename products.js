@@ -5,7 +5,7 @@
 const Products = {
 
   async fetchAll() {
-    const { data, error } = await supabase
+    const { data, error } = await sb
       .from('products')
       .select(`
         *,
@@ -55,7 +55,7 @@ const Products = {
       kode = generateKode('PRD', existingCodes);
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await sb
       .from('products')
       .insert({
         brand_id: productData.brand_id,
@@ -80,7 +80,7 @@ const Products = {
   },
 
   async update(productId, productData) {
-    const { error } = await supabase
+    const { error } = await sb
       .from('products')
       .update({
         nama: productData.nama,
@@ -101,7 +101,7 @@ const Products = {
   },
 
   async deactivate(productId) {
-    const { error } = await supabase
+    const { error } = await sb
       .from('products')
       .update({ aktif: false })
       .eq('id', productId);
@@ -115,7 +115,7 @@ const Products = {
     const aliasTrim = alias.trim().toLowerCase();
     if (!aliasTrim) return;
 
-    const { error } = await supabase
+    const { error } = await sb
       .from('product_aliases')
       .insert({ product_id: productId, alias: aliasTrim });
 
@@ -128,7 +128,7 @@ const Products = {
   },
 
   async removeAlias(aliasId) {
-    const { error } = await supabase
+    const { error } = await sb
       .from('product_aliases')
       .delete()
       .eq('id', aliasId);
