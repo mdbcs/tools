@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistem Terpadu Franchise — 5 Brand</title>
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Supabase JS SDK via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <div id="app">
+    <div class="loading-screen">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Memulai sistem...</div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SEMUA MODUL DI-LOAD DALAM SATU HALAMAN INI (bukan iframe).
+       Urutan penting: config & utils dulu, baru modul data,
+       baru modul UI, dan app.js paling akhir sebagai starter.
+       ============================================================ -->
+
+  <!-- Konfigurasi & utilitas dasar -->
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+
+  <!-- Modul data (akses Supabase) -->
+  <script src="js/auth.js"></script>
+  <script src="js/brands.js"></script>
+  <script src="js/partners.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/realtime.js"></script>
+
+  <!-- Modul UI (render halaman) -->
+  <script src="js/ui-login.js"></script>
+  <script src="js/ui-shell.js"></script>
+  <script src="js/ui-mitra.js"></script>
+  <script src="js/ui-produk.js"></script>
+  <script src="js/ui-cs.js"></script>
+
+  <!-- Starter aplikasi -->
+  <script src="js/app.js"></script>
+
+</body>
+</html>
