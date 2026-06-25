@@ -5,8 +5,12 @@
 const SUPABASE_URL = 'https://qjfsshalpntcaxycemfl.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFqZnNzaGFscG50Y2F4eWNlbWZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzMjMzMjEsImV4cCI6MjA5Nzg5OTMyMX0.U8onuh2JA-cQAvklV-dIERdnDRm60MLf7LYodUkXc2U';
 
-// Inisialisasi client Supabase sekali, dipakai di semua modul
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Inisialisasi client Supabase sekali, dipakai di semua modul.
+// PENTING: nama variabel sengaja "sb" (bukan "supabase") karena SDK CDN
+// sudah memakai nama global "supabase" (window.supabase) untuk dirinya
+// sendiri — pakai nama yang sama bisa memicu konflik deklarasi di
+// beberapa browser/kondisi loading.
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Role yang tersedia di sistem
 const ROLES = {
